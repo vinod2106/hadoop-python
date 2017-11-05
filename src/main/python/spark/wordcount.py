@@ -15,7 +15,8 @@ class WordCount():
         
     
     log4jLogger = sc._jvm.org.apache.log4j
-    logger = log4jLogger.LogManager.getLogger(__name__)
+    logger = log4jLogger.LogManager.getLogger("PySpark")
+    #logger.setLevel('INFO')
     
     
     logger.info(" ############## pyspark script logger initialized #############")
@@ -24,7 +25,7 @@ class WordCount():
     
     ostype = Utils.getPlatform()
     logger.info('ostype dir ====>'+ ostype)
-    inputFile = "D://dev//git//hadoop-python//src//main//resources//spark_notes.txt"
+    inputFile = "D://dev//git//hadoop-python//src//main//resources//input.txt"
     
     dir = Utils.GetFilePath(inputFile)
     logger.info('dir ====>'+ dir)
