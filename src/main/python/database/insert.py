@@ -4,14 +4,14 @@ Created on 8 Nov 2017
 @author: vinsharm
 '''
 import utils
-import logging
-logging.basicConfig(level=logging.INFO)
+from random import randint
+from database.custom_log import Logger
 
 class DataInsert(object):
 
     def __init__(self):
         
-        self.logger = logging.getLogger(__name__)
+        self.logger = Logger(self.__class__.__name__).get() 
         self.logger.info('creating an instance of Class')
 
     def create_project(self, conn, project):
@@ -21,7 +21,6 @@ class DataInsert(object):
         :param project:
         :return: project id
         """
-        self.logger.info("Inside create_project ")
         sql = ''' INSERT INTO projects(name,begin_date,end_date)
                   VALUES(?,?,?) '''
         cur = conn.cursor()
@@ -35,8 +34,7 @@ class DataInsert(object):
         :param task:
         :return:
         """
-        self.logger.info("Inside create_task ")
-        
+      
         sql = ''' INSERT INTO tasks(name,priority,status_id,project_id,begin_date,end_date)
                   VALUES(?,?,?,?,?,?) '''
         cur = conn.cursor()
@@ -53,17 +51,17 @@ class DataInsert(object):
         
         with conn:
             # create a new project
-            project = ('Cool App with SQLite & Python', '2015-01-01', '2015-01-30');
+            project = ('AppSQLitePython', '2015-01-01', '2015-01-30');
             project_id = self.create_project(conn, project)
-     
-            # tasks
-            task_1 = ('Analyze the requirements of the app', 1, 1, project_id, '2015-01-01', '2015-01-02')
-            task_2 = ('Confirm with user about the top requirements', 1, 1, project_id, '2015-01-03', '2015-01-05')
-     
+            
             # create tasks
-            self.logger.info("Creating task")
-            self.create_task(conn, task_1)
-            self.create_task(conn, task_2)
+            self.logger.info("Inserting records into task table")
+            for x in range(100):
+                # tasks
+                task_1 = ('AnalyzeApp', randint(0, 2), randint(0, 5), project_id, '2015-01-01', '2015-01-02')
+                task_2 = ('ConfirmUser', randint(0, 2), randint(0, 5), project_id, '2015-01-03', '2015-01-05')
+                self.create_task(conn, task_1)
+                self.create_task(conn, task_2)
 
 
 if __name__ == '__main__':
