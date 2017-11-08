@@ -5,15 +5,17 @@ Created on 8 Nov 2017
 '''
 
 import utils
-import logging
-logging.basicConfig(level=logging.INFO)
+# import logging
+# logging.basicConfig(level=logging.INFO)
+from database.custom_log import Logger
 
 
 class Select(object):
 
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-        self.logger.info('creating an instance of Class')
+        # self.logger = logging.getLogger(__name__)
+        self.logger = Logger(self.__class__.__name__).get() 
+        # self.logger('creating an instance of Class')
 
     def select_all_tasks(self, conn):
         """
@@ -46,7 +48,7 @@ class Select(object):
  
     def main(self):
         database = "C:\\sqlite\db\pythonsqlite.db"
-     
+        self.logger.info("Database name:%s",database)
         # create a database connection
         conn = utils.create_connection(database)
         with conn:
@@ -61,5 +63,5 @@ class Select(object):
 
 if __name__ == '__main__':
     select = Select()
-    #select.main()
+    select.main()
     utils.read_json('D:\\dev\\git\\hadoop-python\\src\\main\\resources\\logging.json')
