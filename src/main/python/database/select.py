@@ -30,6 +30,8 @@ class Select(object):
      
         for row in rows:
             print(row)
+        
+        self.table_count(conn)
  
     def select_task_by_priority(self, conn, priority):
         """
@@ -46,9 +48,16 @@ class Select(object):
         for row in rows:
             print(row)
  
+    def table_count(self, conn):
+        cur = conn.cursor()
+        cur.execute("SELECT Count() FROM tasks")
+        numberOfRows = cur.fetchone()[0]
+        self.logger.info("Table Count : %s", numberOfRows)
+        print(numberOfRows)
+    
     def main(self):
         database = "C:\\sqlite\db\pythonsqlite.db"
-        self.logger.info("Database name:%s",database)
+        self.logger.info("Database name:%s", database)
         # create a database connection
         conn = utils.create_connection(database)
         with conn:
@@ -59,9 +68,11 @@ class Select(object):
             self.logger.info("2. Query all tasks")
             print("2. Query all tasks")
             self.select_all_tasks(conn)
-     
+        
+        #self.table_count(conn)    
+
 
 if __name__ == '__main__':
     select = Select()
     select.main()
-    utils.read_json('D:\\dev\\git\\hadoop-python\\src\\main\\resources\\logging.json')
+    # utils.read_json('D:\\dev\\git\\hadoop-python\\src\\main\\resources\\logging.json')

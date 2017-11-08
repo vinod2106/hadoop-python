@@ -6,6 +6,9 @@ Created on 8 Nov 2017
 import utils
 from random import randint
 from database.custom_log import Logger
+import datetime
+import random
+
 
 class DataInsert(object):
 
@@ -41,6 +44,23 @@ class DataInsert(object):
         cur.execute(sql, task)
         return cur.lastrowid
     
+    def insert_data(self, conn, nrows):
+        project = ('AppSQLitePython', '2015-01-01', '2015-01-30');
+        project_id = self.create_project(conn, project)
+        
+        # create tasks
+        self.logger.info("Inserting records into task table")
+        for x in range(nrows):
+            # tasks
+            d1 = datetime.date(2007, 01, 01)
+            d2 = datetime.date(2007, 01, 31)
+            sdate = utils.random_date(d1, d2)
+            edate = sdate + datetime.timedelta(days=random.randint(1, 11))
+            task_1 = ('AnalyzeApp', randint(0, 2), randint(0, 5), project_id, sdate, edate)
+            task_2 = ('ConfirmUser', randint(0, 2), randint(0, 5), project_id, sdate, edate)
+            self.create_task(conn, task_1)
+            self.create_task(conn, task_2)           
+    
     def main(self):
         
         database = "C:\\sqlite\db\pythonsqlite.db"
@@ -50,18 +70,7 @@ class DataInsert(object):
         conn = utils.create_connection(database)
         
         with conn:
-            # create a new project
-            project = ('AppSQLitePython', '2015-01-01', '2015-01-30');
-            project_id = self.create_project(conn, project)
-            
-            # create tasks
-            self.logger.info("Inserting records into task table")
-            for x in range(100):
-                # tasks
-                task_1 = ('AnalyzeApp', randint(0, 2), randint(0, 5), project_id, '2015-01-01', '2015-01-02')
-                task_2 = ('ConfirmUser', randint(0, 2), randint(0, 5), project_id, '2015-01-03', '2015-01-05')
-                self.create_task(conn, task_1)
-                self.create_task(conn, task_2)
+            self.insert_data(conn, 100)
 
 
 if __name__ == '__main__':

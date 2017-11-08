@@ -1,6 +1,19 @@
 import sqlite3
 from sqlite3 import Error
 import json 
+from random import randrange
+from datetime import timedelta
+import datetime
+
+def random_date(start, end):
+    """
+    This function will return a random datetime between two datetime 
+    objects.
+    """
+    delta = end - start
+    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
+    random_second = randrange(int_delta)
+    return start + timedelta(seconds=random_second)
 
  
 def create_connection(db_file):
@@ -72,4 +85,7 @@ def read_json(jsonfile):
         
 if __name__ == '__main__':
     # create_connection("C:\\sqlite\db\pythonsqlite.db")
-    main()
+    #main()
+    d1 = datetime.date(2007-12-5)
+    d2 = datetime.date(2007-12-9)
+    print random_date(d1, d2)
