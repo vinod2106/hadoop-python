@@ -3,11 +3,11 @@ Created on 8 Nov 2017
 
 @author: vinsharm
 '''
-from database.custom_log import Logger
+from utils.custom_log import Logger
 from select import  Select
 from database.delete import Delete
 from insert import DataInsert
-import utils
+from utils import utils
 
 
 class CustomClass(object):

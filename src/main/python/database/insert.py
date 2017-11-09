@@ -3,7 +3,7 @@ Created on 8 Nov 2017
 
 @author: vinsharm
 '''
-import utils
+from utils import utils
 from random import randint
 from database.custom_log import Logger
 import datetime

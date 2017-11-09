@@ -4,7 +4,7 @@ Created on 8 Nov 2017
 @author: vinsharm
 '''
 from database.custom_log import Logger
-import utils
+from utils import utils
 
 
 class Delete(object):

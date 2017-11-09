@@ -4,10 +4,10 @@ Created on 8 Nov 2017
 @author: vinsharm
 '''
 
-import utils
+from utils import utils
 # import logging
 # logging.basicConfig(level=logging.INFO)
-from database.custom_log import Logger
+from utils.custom_log import Logger
 
 
 class Select(object):
