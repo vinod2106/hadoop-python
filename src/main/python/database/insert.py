@@ -5,7 +5,7 @@ Created on 8 Nov 2017
 '''
 from utils import utils
 from random import randint
-from database.custom_log import Logger
+from utils.custom_log import Logger
 import datetime
 import random
 
